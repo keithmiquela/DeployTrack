@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 
 const loginForm = () => {
+    let navigate = useNavigate();
 
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState(null);
@@ -44,8 +46,16 @@ const loginForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setEmailError(validateEmail(value))
+        setEmailError(validateEmail(email))
+        setPasswordError(validatePassword(password));
+        if(!validateEmail(email)&&!validatePassword(password)){
+            navigate("/dashboard");
+        }
     }
+
+    useEffect(()=> {
+        localStorage.setItem("name", JSON.stringify(password));
+    }, [password])
 
     return (
         <>
