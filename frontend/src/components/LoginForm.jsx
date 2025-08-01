@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
@@ -49,13 +49,10 @@ const loginForm = () => {
         setEmailError(validateEmail(email))
         setPasswordError(validatePassword(password));
         if(!validateEmail(email)&&!validatePassword(password)){
-            navigate("/home");
+            localStorage.setItem("name", JSON.stringify(password));
+            navigate("../");
         }
     }
-
-    useEffect(()=> {
-        localStorage.setItem("name", JSON.stringify(password));
-    }, [password])
 
     return (
         <>
