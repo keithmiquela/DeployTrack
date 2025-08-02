@@ -3,7 +3,8 @@ import Dashboard from '../pages/Dashboard.jsx'
 import Login from '../pages/Login.jsx'
 import MainLayout from '../layouts/MainLayout.jsx'
 import { useState, useEffect } from 'react'
-import ProtectedRoute from './ProtectedRoute.jsx'
+import NewDeployment from '../pages/NewDeployment.jsx'
+import DeploymentLogs from '../pages/DeploymentLogs.jsx'
 
 const AppRoutes = () => {
 
@@ -19,8 +20,12 @@ const AppRoutes = () => {
     <BrowserRouter>
         <Routes>
         <Route path="login" element={<Login />}></Route>
-        <Route path="/" element={<MainLayout />}>
+        <Route path="dashboard" element={<MainLayout />}>
           <Route index element={<Dashboard />}></Route>
+        </Route>
+        <Route path="deployment" element={<MainLayout />}>
+          <Route path="new" element={<NewDeployment />}></Route>
+          <Route path=":id" element={<DeploymentLogs />}></Route>
         </Route>
         </Routes>
     </BrowserRouter>

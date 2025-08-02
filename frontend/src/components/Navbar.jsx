@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
+import { NavLink } from 'react-router'
 
 const Navbar = () => {
 
@@ -15,8 +16,30 @@ const Navbar = () => {
       <div className='flex flex-row gap-10'>
         <p className='text-xl text-blue-400 font-bold'>DeployTrack</p>
         <div className='flex flex-row gap-8'>
-          <button className="cursor-pointer text-gray-200 hover:text-white">Dashboard</button>
-          <button className="cursor-pointer text-gray-200 hover:text-white">New Deployment</button>
+          <NavLink to="/dashboard">
+            {({isActive})=>(
+              <span className=
+                {isActive
+                  ? "cursor-pointer text-gray-200 hover:text-white bg-gray-600 p-2 rounded-lg"
+                  : "cursor-pointer text-gray-200 hover:text-white p-2"
+                }
+              >
+                Dashboard
+              </span>
+            )}
+          </NavLink>
+          <NavLink to="/deployment/new">
+            {({isActive})=>(
+              <span className=
+                {isActive
+                  ? "cursor-pointer text-gray-200 hover:text-white bg-gray-600 p-2 rounded-lg"
+                  : "cursor-pointer text-gray-200 hover:text-white p-2"
+                }
+              >
+                New Deployment
+              </span>
+            )}
+          </NavLink>
         </div>
       </div>
       <div className='flex flex-row gap-2 text-sm'>

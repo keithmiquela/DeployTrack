@@ -50,7 +50,7 @@ const loginForm = () => {
         setPasswordError(validatePassword(password));
         if(!validateEmail(email)&&!validatePassword(password)){
             localStorage.setItem("name", JSON.stringify(password));
-            navigate("../");
+            navigate("../dashboard");
         }
     }
 
