@@ -18,16 +18,8 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
         <Routes>
-        <Route path="login" element={
-            <ProtectedRoute isChecked={!isLoggedIn} reRoute={"../"}>
-              <Login />
-            </ProtectedRoute>
-        }></Route>
-        <Route path="/" element={
-            <ProtectedRoute isChecked={isLoggedIn} reRoute={"/login"}>
-              <MainLayout />
-            </ProtectedRoute>
-          }>
+        <Route path="login" element={<Login />}></Route>
+        <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />}></Route>
         </Route>
         </Routes>

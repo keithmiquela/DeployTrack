@@ -1,11 +1,33 @@
+require('dotenv').config()
+
 const express = require('express')
+const mongoose = require('mongoose')
+
+const deployments = require('./routes/deployments')
+
+// express app
 const app = express()
-const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+// middleware
+app.use(express.json());
+
+app.use((req, res, next) => {
+  console.log(req.path, req.method)
+  next()
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+// routes
+app.use('/deployments/',deployments)
+
+//connect to db
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`Connected to db, listening on port ${process.env.PORT}`)
+    })
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+// listen for reques
