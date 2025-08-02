@@ -1,25 +1,23 @@
 const express = require('express')
 const Deployment = require('../models/deploymentModel')
-const {createDeployment} = require('../controllers/deploymentController')
+const {
+    getDeployments,
+    getDeployment,
+    createDeployment,
+    deleteDeployment,
+    updateDeployment
+} = require('../controllers/deploymentController')
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-    res.json({mssg: 'Get all deployments'})
-})
+router.get('/', getDeployments)
 
-router.get('/:id', (req, res) => {
-    res.json({mssg: 'Get one deployment'})
-})
+router.get('/:id', getDeployment)
 
 router.post('/', createDeployment)
 
-router.delete('/:id', (req, res) => {
-    res.json({mssg: 'Delete a workout'})
-})
+router.delete('/:id', deleteDeployment)
 
-router.patch('/:id', (req, res) => {
-    res.json({mssg: 'Change a workout'})
-})
+router.patch('/:id', updateDeployment)
 
-module.exports = 
+module.exports = router
