@@ -1,10 +1,35 @@
 import React from 'react'
 import Status from './Status'
 import { useNavigate } from 'react-router'
+import { useEffect } from 'react'
 
 const DeploymentDetails = ({deployment}) => {
 
     const navigate = useNavigate();
+
+    const handleDelete = async(e) => {
+
+        const port = import.meta.env.VITE_BACKEND_PORT
+        
+        e.preventDefault()
+
+        const response = await fetch(`http://localhost:${port}/deployments/${deployment._id}`, {
+            method:"DELETE",
+            body: JSON.stringify(deployment),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        const json = await response.json()
+
+        if(!response.ok){
+            setError(json.error)
+        }
+        else{
+            console.log("Successfully deleted deployment", json)
+        }
+    }
 
   return (
     <tr className='bg-gray-800 h-15 border-t border-gray-700' key={deployment._id}>
@@ -26,7 +51,7 @@ const DeploymentDetails = ({deployment}) => {
         <th className="text-right px-6 font-normal text-sm text-white">
         <div className='flex gap-3'>
             <button className='w-18 text-blue-400 font-semibold hover:text-blue-300 cursor-pointer' onClick={() => {navigate(`../deployment/${deployment._id}`)}}>View Logs</button>
-            <button className='text-red-400 font-semibold hover:text-red-300 cursor-pointer'>Delete</button>
+            <button className='text-red-400 font-semibold hover:text-red-300 cursor-pointer' onClick={handleDelete}>Delete</button>
         </div>
         </th>
     </tr>

@@ -20,7 +20,7 @@ const getDeployment = async (req, res) => {
 
     const deployment = await Deployment.findById(id)
 
-    if(deployment){
+    if(!deployment){
         return res.status(404).json({error: "No such deployment"})
     }
 
