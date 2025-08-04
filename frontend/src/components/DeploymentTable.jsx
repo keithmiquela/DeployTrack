@@ -1,15 +1,16 @@
 import React from 'react'
 import mockDeployments from '../data/mockDeployments'
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import DeploymentDetails from './DeploymentDetails';
-import { useNavigate } from 'react-router';
+import { useDeploymentsContext } from '../hooks/useDeploymentsContext';
+
 
 const DeploymentTable = () => {
   const backendPort = import.meta.env.VITE_BACKEND_PORT;
   const columns = [
     {title: "NAME", _id: "1"},{title: "ENVIRONMENT", _id: "2"},{title: "DATE", _id: "3"},{title: "STATUS", _id:"4"}
   ];
-  const [deployments, setDeployments] = useState(mockDeployments)
+  const {deployments, dispatch} = useDeploymentsContext();
 
   useEffect (() => {
     const fetchDeployments = async() =>{
@@ -17,15 +18,12 @@ const DeploymentTable = () => {
       const json = await response.json()
 
       if(response.ok){
-        setDeployments(json)
+        dispatch({type: 'SET_DEPLOYMENTS', payload: json})
       }
     }
 
     fetchDeployments()
-  }, [])
-
-  
-  
+  }, [dispatch])
 
   return (
     <div className='mx-7 my-5 overflow-hidden rounded-lg border border-gray-700' >
@@ -39,7 +37,7 @@ const DeploymentTable = () => {
             </tr>
           </thead>
           <tbody>
-            {deployments.map((deployment) => (
+            {deployments && deployments.map((deployment) => (
                 <DeploymentDetails key={deployment._id} deployment={deployment} />
               ))}
           </tbody>

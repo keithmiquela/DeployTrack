@@ -1,24 +1,20 @@
 import React from 'react'
 import Status from './Status'
 import { useNavigate } from 'react-router'
-import { useEffect } from 'react'
+import { useDeploymentsContext } from '../hooks/useDeploymentsContext'
 
 const DeploymentDetails = ({deployment}) => {
 
     const navigate = useNavigate();
 
+    const {dispatch} = useDeploymentsContext();
+
     const handleDelete = async(e) => {
 
         const port = import.meta.env.VITE_BACKEND_PORT
-        
-        e.preventDefault()
 
         const response = await fetch(`http://localhost:${port}/deployments/${deployment._id}`, {
-            method:"DELETE",
-            body: JSON.stringify(deployment),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            method:"DELETE"
         })
 
         const json = await response.json()
@@ -27,7 +23,7 @@ const DeploymentDetails = ({deployment}) => {
             setError(json.error)
         }
         else{
-            console.log("Successfully deleted deployment", json)
+            dispatch({type: 'DELETE_DEPLOYMENT', payload: json})
         }
     }
 

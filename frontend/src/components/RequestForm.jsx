@@ -13,6 +13,7 @@ const RequestForm = () => {
     const [message, setMessage] = useState(null)
 
     const[error, setError] = useState(null);
+    const[emptyFields, setEmptyFields] = useState([])
 
     const navigate = useNavigate()
 
@@ -36,16 +37,18 @@ const RequestForm = () => {
 
         if(!response.ok){
             setError(json.error)
+            setEmptyFields(json.emptyFields)
         }
         else{
-            setService('')
+            setService(null)
             setEnvironment('development')
             setStatus('success')
             setDuration('1 min 0 s')
             setCommit('abcdef')
             setUser('test user')
-            setMessage('')
+            setMessage(null)
             setError(null)
+            setEmptyFields([])
 
             console.log("new deployment added", json)
         }
@@ -54,18 +57,20 @@ const RequestForm = () => {
   return (
     <>
         <form className="w-[95vw] h-107 bg-gray-800 rounded-xl py-9 px-8" onSubmit={ handleSubmit}>
-            <label for="service" className="text-sm text-white mb-1">Deployment Name</label>
+            <label htmlFor="service" className="text-sm text-white mb-1">Deployment Name</label>
             <input 
                 id="service" 
                 type="text" 
                 placeholder="Frontend Update v1.2" 
-                value = {service}
+                value = {service||""}
                 onChange = {(e)=>{setService(e.target.value)}} 
-                className="bg-gray-700 w-full h-10 rounded-md px-3 text-sm text-gray-100 mb-2 focus:outline-2 focus:outline-blue-400"
+                className={`w-full h-10 rounded-md px-3 text-sm text-gray-100 mb-2 focus:outline-2 focus:outline-blue-400 bg-gray-700 
+                            ${(emptyFields?.includes("service")? "outline-2 outline-red-400" : "")}
+                        `}
             >
             </input>
             <div className="h-[1rem]"></div>
-            <label for="environment" className="text-sm text-white mb-1">Environment</label>
+            <label htmlFor="environment" className="text-sm text-white mb-1">Environment</label>
             <select 
                 id="environment" 
                 onChange={(e)=>{setEnvironment(e.target.value)}} 
@@ -78,17 +83,19 @@ const RequestForm = () => {
             </select>
             <div className="h-[1rem] mb-2"></div>
 
-            <label for="message" className="text-sm text-white mb-1">Description</label>
+            <label htmlFor="message" className="text-sm text-white mb-1">Description</label>
             <textarea 
                 id="message" 
                 type="text" 
-                placeholder="Frontend Update v1.2" 
-                value = {message}
+                placeholder="Describe the deployment." 
+                value = {message||""}
                 onChange={(e)=>{setMessage(e.target.value)}} 
                 className="bg-gray-700 w-full rounded-md px-3 pt-3 text-sm text-gray-100 mb-2 focus:outline-2 focus:outline-blue-400 min-h-22"
             >
             </textarea>
             {error && <p className="text-red-400 text-sm ml-1">{error}</p>}
+            {emptyFields && <p className="text-red-400 text-sm ml-1">Here are the empty fields: {emptyFields}</p>}
+            
             <div className="h-[1rem]"></div>
             <div className='flex justify-end w-full gap-3'>
                 <button className="bg-gray-600 text-white text-sm w-20 h-10 rounded-md hover:bg-gray-500 active:bg-gray-700 cursor-pointer mb-2" type="button" onClick={() => {navigate("/dashboard")}}>Cancel</button>
