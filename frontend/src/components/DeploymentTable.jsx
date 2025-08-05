@@ -31,9 +31,9 @@ const DeploymentTable = () => {
           <thead className='bg-gray-900 text-gray-400 h-10'>
             <tr>
               {columns.map((columnName) => (
-                <th className="text-left px-6 font-normal text-sm" key={columnName._id}>{columnName.title}</th>
+                <th className="text-left px-6 font-normal text-sm pt-1" key={columnName._id}>{columnName.title}</th>
               ))}
-              <th className="text-right px-6 font-normal text-sm">ACTIONS</th>
+              <th className="text-right px-6 font-normal text-sm pt-1">ACTIONS</th>
             </tr>
           </thead>
           <tbody>

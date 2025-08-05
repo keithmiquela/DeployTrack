@@ -2,12 +2,15 @@ import React from 'react'
 import Status from './Status'
 import { useNavigate } from 'react-router'
 import { useDeploymentsContext } from '../hooks/useDeploymentsContext'
+import { useState } from 'react'
 
 const DeploymentDetails = ({deployment}) => {
 
     const navigate = useNavigate();
 
     const {dispatch} = useDeploymentsContext();
+
+    const [error, setError] = useState(null)
 
     const handleDelete = async(e) => {
 

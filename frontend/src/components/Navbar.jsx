@@ -1,14 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { NavLink } from 'react-router'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const Navbar = () => {
 
+  const port = import.meta.env.VITE_BACKEND_PORT;
   const navigate = useNavigate()
 
+  const {dispatch} = useAuthContext();
+
   const handleLogout = (e) => {
-    localStorage.removeItem("name");
-    navigate("/login");
+    
   }
 
   return (

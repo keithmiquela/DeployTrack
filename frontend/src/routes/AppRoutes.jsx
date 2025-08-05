@@ -9,19 +9,11 @@ import { Navigate } from 'react-router'
 
 const AppRoutes = () => {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(localStorage.getItem("name")))
-
-  useEffect(() => {
-    if(localStorage.getItem("name") != null){
-      setIsLoggedIn(true);
-    }
-  }, [localStorage])
-
   return (
     <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/user/login" replace />}/>
-            <Route path="login" element={<Login />}></Route>
+          <Route path="/" element={<Navigate to="user/login" replace />}/>
+            <Route path="user/login" element={<Login />}></Route>
           <Route path="dashboard" element={<MainLayout />}>
             <Route index element={<Dashboard />}></Route>
           </Route>
