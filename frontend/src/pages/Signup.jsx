@@ -1,0 +1,23 @@
+import React from 'react'
+import SignupForm from '../components/SignupForm.jsx'
+import { useNavigate } from 'react-router'
+
+const Signup = () => {
+    
+    const navigate = useNavigate()
+
+  return (
+    <>
+      <div className="w-screen h-screen bg-slate-900 flex flex-col justify-center items-center">
+          <h1 className="text-3xl font-bold text-blue-400 mb-2">DeployTrack</h1>
+          <h2 className="text-xl text-white mb-6">Learning DevOps Deployment Tracking</h2>
+          <SignupForm />
+          <p className="text-gray-400 text-sm mt-4">Already have an account? <button onClick={() => navigate("/user/login")} className="text-blue-400 hover:underline">Log in</button></p>
+          <div className="w-20 h-20 bg-white">
+          </div>
+      </div>
+    </>
+  )
+}
+
+export default Signup

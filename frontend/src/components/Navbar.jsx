@@ -2,16 +2,22 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import { NavLink } from 'react-router'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useLogout } from '../hooks/useLogout'
 
 const Navbar = () => {
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const port = import.meta.env.VITE_BACKEND_PORT;
   const navigate = useNavigate()
 
+  const {logout} = useLogout()
+
   const {dispatch} = useAuthContext();
 
-  const handleLogout = (e) => {
-    
+  const handleLogout = async (e) => {
+    await logout()
+    navigate("/user/login")
   }
 
   return (
@@ -46,7 +52,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className='flex flex-row gap-2 text-sm'>
-        <p className="text-gray-200">{localStorage.getItem("name")}</p>
+        <p className="text-gray-200">{user?.name}</p>
         <button className="cursor-pointer text-gray-200 hover:text-white" onClick={handleLogout}>Logout</button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router'
 import Dashboard from '../pages/Dashboard.jsx'
 import Login from '../pages/Login.jsx'
+import Signup from '../pages/Signup.jsx'
 import MainLayout from '../layouts/MainLayout.jsx'
 import { useState, useEffect } from 'react'
 import NewDeployment from '../pages/NewDeployment.jsx'
@@ -13,7 +14,11 @@ const AppRoutes = () => {
     <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="user/login" replace />}/>
-            <Route path="user/login" element={<Login />}></Route>
+          <Route path="user">
+            <Route index element={<Navigate to="login" replace />}/>
+            <Route path="login" element={<Login />}></Route>
+            <Route path="signup" element={<Signup />}></Route>
+          </Route>
           <Route path="dashboard" element={<MainLayout />}>
             <Route index element={<Dashboard />}></Route>
           </Route>

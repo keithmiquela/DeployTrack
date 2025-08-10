@@ -8,10 +8,6 @@ export const deploymentsReducer = (state, action) => {
             return {
                 deployments: action.payload
             }
-        // case 'CREATE_DEPLOYMENT':
-        //     return {
-        //         deployments: [action.payload, ...(state.deployments || [])]
-        //     }
         case 'DELETE_DEPLOYMENT':
             return {
                 deployments: state.deployments.filter((deployment) => (deployment._id !== action.payload._id))

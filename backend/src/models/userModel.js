@@ -54,12 +54,16 @@ userSchema.statics.signup = async function (name, email, password) {
     }
 
     if(!validator.isStrongPassword(password)){
-        throw Error("Password must contain an uppercase letter, a lowercase letter, and a symbol.")
+        throw Error("Password must be at least 8 characters long and include a number, a uppercase letter, a lowercase letter, and a symbol.")
     }
 
-    const exists = await this.findOne({email})
-    if(exists){
+    const emailExists = await this.findOne({email})
+    const nameExists = await this.findOne({name})
+    if(emailExists){
         throw Error("Email already in use.")
+    }
+    if(nameExists){
+        throw Error("Username already in use.")
     }
     
     const salt = await bcrypt.genSalt(SaltRounds)

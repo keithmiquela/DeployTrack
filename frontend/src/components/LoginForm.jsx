@@ -2,8 +2,9 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useLogin } from '../hooks/useLogin'
 
-const loginForm = () => {
+const LoginForm = () => {
 
     const navigate = useNavigate();
 
@@ -11,31 +12,12 @@ const loginForm = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
-    const[error, setError] = useState(null)
+    const {login, isLoading, error} = useLogin();
 
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        const port = import.meta.env.VITE_BACKEND_PORT
-
-        const credentials = {email, password}
-
-        const response = await fetch(`http://localhost:${port}/user/login`, {
-            method:"POST",
-            body: JSON.stringify(credentials),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-
-        const json = await response.json()
-
-        if(!response.ok){
-            setError(json.error)
-        }
-        else{
-            dispatch({type: 'LOGIN', payload: json})
-        }
+        await login(email, password)
     }
 
     return (
@@ -70,9 +52,10 @@ const loginForm = () => {
 
                 <button className="bg-blue-600 text-white text-sm w-full h-10 rounded-md hover:bg-blue-500 active:bg-blue-700 cursor-pointer mb-2">Sign In</button>
                 <p className="text-gray-400 text-xs">For demo purposes, any email and password will work</p>
+                {error && <p className="text-red-400 text-sm ml-1">{error}</p>}
             </form>
         </>
     )
 }
 
-export default loginForm
+export default LoginForm
