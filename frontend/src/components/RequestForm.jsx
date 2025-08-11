@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const RequestForm = () => {
 
@@ -9,7 +10,7 @@ const RequestForm = () => {
     const [status, setStatus] = useState('success')
     const [duration, setDuration] = useState("1 min 0 s")
     const [commit, setCommit] = useState("abcdef")
-    const [user, setUser] = useState("test user")
+    const {user} = useAuthContext();
     const [message, setMessage] = useState(null)
 
     const[error, setError] = useState(null);
@@ -23,13 +24,19 @@ const RequestForm = () => {
         
         e.preventDefault()
 
-        const deployment = {service, environment, status, duration, commit, user, message}
+        if(!user){
+            setError('Must be logged in.')
+            return
+        }
+
+        const deployment = {service, environment, status, duration, commit, user: user?.name, message}
 
         const response = await fetch(`http://localhost:${port}/deployments/`, {
             method:"POST",
             body: JSON.stringify(deployment),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
 
@@ -45,7 +52,6 @@ const RequestForm = () => {
             setStatus('success')
             setDuration('1 min 0 s')
             setCommit('abcdef')
-            setUser('test user')
             setMessage(null)
             setError(null)
             setEmptyFields([])

@@ -1,14 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogin } from '../hooks/useLogin'
 
 const LoginForm = () => {
 
     const navigate = useNavigate();
 
-    const{dispatch} = useAuthContext()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');

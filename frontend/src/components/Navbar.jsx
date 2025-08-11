@@ -1,19 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { NavLink } from 'react-router'
-import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const Navbar = () => {
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const {user} = useAuthContext();
 
   const port = import.meta.env.VITE_BACKEND_PORT;
   const navigate = useNavigate()
 
   const {logout} = useLogout()
-
-  const {dispatch} = useAuthContext();
 
   const handleLogout = async (e) => {
     await logout()

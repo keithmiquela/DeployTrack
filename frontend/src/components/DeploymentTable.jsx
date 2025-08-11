@@ -3,6 +3,7 @@ import mockDeployments from '../data/mockDeployments'
 import { useEffect } from 'react';
 import DeploymentDetails from './DeploymentDetails';
 import { useDeploymentsContext } from '../hooks/useDeploymentsContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 
 const DeploymentTable = () => {
@@ -12,18 +13,25 @@ const DeploymentTable = () => {
   ];
   const {deployments, dispatch} = useDeploymentsContext();
 
+  const {user} = useAuthContext();
+
   useEffect (() => {
     const fetchDeployments = async() =>{
-      const response  = await fetch(`http://localhost:${backendPort}/deployments/`)
+      const response  = await fetch(`http://localhost:${backendPort}/deployments/`, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
       const json = await response.json()
 
       if(response.ok){
         dispatch({type: 'SET_DEPLOYMENTS', payload: json})
       }
     }
-
-    fetchDeployments()
-  }, [dispatch])
+    if(user){
+      fetchDeployments()
+    }
+  }, [dispatch, user])
 
   return (
     <div className='mx-7 my-5 overflow-hidden rounded-lg border border-gray-700' >

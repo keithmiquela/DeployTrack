@@ -7,26 +7,17 @@ import { useState, useEffect } from 'react'
 import NewDeployment from '../pages/NewDeployment.jsx'
 import DeploymentLogs from '../pages/DeploymentLogs.jsx'
 import { Navigate } from 'react-router'
+import { useAuthContext } from '../hooks/useAuthContext.js'
+import LoggedInRoutes from './LoggedInRoutes.jsx'
+import LoggedOutRoutes from './LoggedOutRoutes.jsx'
 
 const AppRoutes = () => {
 
+  const {user} = useAuthContext();
+
   return (
     <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="user/login" replace />}/>
-          <Route path="user">
-            <Route index element={<Navigate to="login" replace />}/>
-            <Route path="login" element={<Login />}></Route>
-            <Route path="signup" element={<Signup />}></Route>
-          </Route>
-          <Route path="dashboard" element={<MainLayout />}>
-            <Route index element={<Dashboard />}></Route>
-          </Route>
-          <Route path="deployment" element={<MainLayout />}>
-            <Route path="new" element={<NewDeployment />}></Route>
-            <Route path=":id" element={<DeploymentLogs />}></Route>
-          </Route>
-        </Routes>
+      {user ? <LoggedInRoutes /> : <LoggedOutRoutes />}
     </BrowserRouter>
   )
 }

@@ -3,6 +3,7 @@ import Status from './Status'
 import { useNavigate } from 'react-router'
 import { useDeploymentsContext } from '../hooks/useDeploymentsContext'
 import { useState } from 'react'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const DeploymentDetails = ({deployment}) => {
 
@@ -12,12 +13,20 @@ const DeploymentDetails = ({deployment}) => {
 
     const [error, setError] = useState(null)
 
+    const {user} = useAuthContext();
+
     const handleDelete = async(e) => {
 
+        if (!user){
+            return
+        }
         const port = import.meta.env.VITE_BACKEND_PORT
 
         const response = await fetch(`http://localhost:${port}/deployments/${deployment._id}`, {
-            method:"DELETE"
+            method:"DELETE",
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
 
         const json = await response.json()
