@@ -6,7 +6,7 @@ import { useDeploymentsContext } from '../hooks/useDeploymentsContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 
-const DeploymentTable = () => {
+const DeploymentTable = ({isViewGlobal}) => {
   const backendPort = import.meta.env.VITE_BACKEND_PORT;
   const columns = [
     {title: "NAME", _id: "1"},{title: "CREATED BY", _id: "2"},{title: "ENVIRONMENT", _id: "3"},{title: "DATE", _id: "4"},{title: "STATUS", _id:"5"},{title: "ACTIONS", _id:"6"}
@@ -17,7 +17,13 @@ const DeploymentTable = () => {
 
   useEffect (() => {
     const fetchDeployments = async() =>{
-      const response  = await fetch(`http://localhost:${backendPort}/deployments/`, {
+      const response  = isViewGlobal ? await fetch(`http://localhost:${backendPort}/deployments/`, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
+      :
+      await fetch(`http://localhost:${backendPort}/deployments/user/${user._id}`, {
         headers: {
           'Authorization': `Bearer ${user.token}`
         }
@@ -31,7 +37,7 @@ const DeploymentTable = () => {
     if(user){
       fetchDeployments()
     }
-  }, [dispatch, user])
+  }, [dispatch, user, isViewGlobal])
 
   return (
     <div className='mx-7 my-5 rounded-lg border border-gray-700 max-h-[75vh] overflow-y-auto' >

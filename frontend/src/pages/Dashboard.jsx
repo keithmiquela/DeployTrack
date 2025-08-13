@@ -16,7 +16,7 @@ const Dashboard = () => {
         <div className='flex items-center gap-5 text-white'>
           <div className='flex gap-2'>
             <label for='view-global'>View global deployments: </label>
-            <input id="view-global" type="checkbox" className='w-6 h-6' value={viewGlobal} onChange={(e) => setViewGlobal(!viewGlobal)}></input>
+            <input id="view-global" type="checkbox" className='w-6 h-6' value={viewGlobal} onChange={(e) => setViewGlobal(e.target.checked)}></input>
           </div>
           <button className="text-white bg-blue-600 h-full py-2 px-4 rounded-lg cursor-pointer hover:bg-blue-500" onClick={() => navigate("../deployment/new")}>New Deployment</button>
         </div>
