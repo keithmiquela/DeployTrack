@@ -32,6 +32,8 @@ const getDeployment = async (req, res) => {
 const createDeployment = async (req, res) => {
     const {service, environment, status, duration, commit, user, message} = req.body
 
+    const user_id = req.user._id
+
     let emptyFields = []
     if(!service){
         emptyFields.push('service')
@@ -61,7 +63,7 @@ const createDeployment = async (req, res) => {
 
     
     try {
-        const deployment = await Deployment.create({service, environment, status, duration, commit, user, message})
+        const deployment = await Deployment.create({service, environment, status, duration, commit, user, message, user_id: req.user._id})
         res.status(200).json(deployment)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -80,6 +82,10 @@ const deleteDeployment = async (req, res) => {
 
     if(!deployment){
         return res.status(404).json({error: "No such deployment"})
+    }
+
+    if(req.user._id!=deployment.user_id){
+        return res.status(403).json({error: `"User does not have permissions."`})
     }
 
     res.status(200).json(deployment)

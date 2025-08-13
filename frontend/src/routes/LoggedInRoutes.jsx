@@ -4,6 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import Dashboard from "../pages/Dashboard";
 import NewDeployment from "../pages/NewDeployment";
 import DeploymentLogs from "../pages/DeploymentLogs";
+import EditDeployment from "../pages/EditDeployment"
 
 const LoggedInRoutes = () => {
   return (
@@ -19,7 +20,10 @@ const LoggedInRoutes = () => {
         </Route>
         <Route path="deployment" element={<MainLayout />}>
             <Route path="new" element={<NewDeployment />}></Route>
-            <Route path=":id" element={<DeploymentLogs />}></Route>
+            <Route path=":id">
+              <Route path="logs" element={<DeploymentLogs />}></Route>
+              <Route path="edit" element={<EditDeployment />}></Route>
+            </Route>
         </Route>
     </Routes>
   )

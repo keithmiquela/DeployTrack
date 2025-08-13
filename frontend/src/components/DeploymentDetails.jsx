@@ -41,12 +41,17 @@ const DeploymentDetails = ({deployment}) => {
 
   return (
     <tr className='bg-gray-800 h-15 border-t border-gray-700' key={deployment._id}>
+        {/* Name */}
         <th className="text-left px-6 py-2 font-normal">
-        <p className='text-sm text-white' >{deployment.service}</p>
-        <p className='text-xs text-gray-400'>{deployment.message}</p>
+            <p className='text-sm text-white' >{deployment.service}</p>
+            <p className='text-xs text-gray-400'>{deployment.message}</p>
+        </th>
+        {/* User */}
+        <th className="text-left px-6 font-normal text-sm text-gray-300 min-w-55">
+            {deployment.user}
         </th>
         <th className="text-left px-6 font-normal text-xs text-white">
-        <span className='bg-gray-700 p-2 rounded-3xl w-auto'>{deployment.environment}</span>
+            <span className='bg-gray-700 p-2 rounded-3xl w-auto'>{deployment.environment}</span>
         </th>
         <th className="text-left px-6 font-normal text-sm text-gray-300 min-w-55">
         {new Date(deployment.createdAt).toLocaleString()}
@@ -58,8 +63,9 @@ const DeploymentDetails = ({deployment}) => {
         </th>
         <th className="text-right px-6 font-normal text-sm text-white">
         <div className='flex gap-3'>
-            <button className='w-18 text-blue-400 font-semibold hover:text-blue-300 cursor-pointer' onClick={() => {navigate(`../deployment/${deployment._id}`)}}>View Logs</button>
-            <button className='text-red-400 font-semibold hover:text-red-300 cursor-pointer' onClick={handleDelete}>Delete</button>
+            <button className='w-18 text-blue-400 font-semibold hover:text-blue-300 cursor-pointer' onClick={() => {navigate(`../deployment/${deployment._id}/logs`)}}>View Logs</button>
+            {user._id==deployment.user_id && <button className='text-yellow-400 font-semibold hover:text-red-300 cursor-pointer' >Edit</button>}
+            {user._id==deployment.user_id && <button className='text-red-400 font-semibold hover:text-red-300 cursor-pointer' onClick={handleDelete}>Delete</button>}
         </div>
         </th>
     </tr>

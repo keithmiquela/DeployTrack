@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
 import Status from '../components/Status';
 import LogsTable from '../components/LogsTable';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const DeploymentLogs = () => {
     const backendPort = import.meta.env.VITE_BACKEND_PORT;
@@ -13,17 +14,22 @@ const DeploymentLogs = () => {
 
     const [deployment, setDeployment] = useState(null)
 
+    const {user} = useAuthContext();
+
     useEffect (() => {
         const fetchDeployment = async() =>{
-        const response  = await fetch(`http://localhost:${backendPort}/deployments/${id}`)
-        const json = await response.json()
-
-        if(response.ok){
-            setDeployment(json)
-        }
-        else{
-            navigate("/404")
-        }
+            const response  = await fetch(`http://localhost:${backendPort}/deployments/${id}`, {
+                headers: {
+                'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+            if(response.ok){
+                setDeployment(json)
+            }
+            else{
+                navigate("/404")
+            }
         }
 
         fetchDeployment()
@@ -43,6 +49,7 @@ const DeploymentLogs = () => {
                     </p>
                 </div>
             </div>
+            <p></p>
             <LogsTable />
         </div>
     </>
