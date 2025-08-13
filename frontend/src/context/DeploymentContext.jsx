@@ -8,6 +8,10 @@ export const deploymentsReducer = (state, action) => {
             return {
                 deployments: action.payload
             }
+        case 'SET_USER_DEPLOYMENTS':
+            return {
+                deployment: state.deployments.filter((deployment) => (deployment.user_id === action.payload._id))
+            }
         case 'DELETE_DEPLOYMENT':
             return {
                 deployments: state.deployments.filter((deployment) => (deployment._id !== action.payload._id))

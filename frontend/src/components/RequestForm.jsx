@@ -12,6 +12,7 @@ const RequestForm = () => {
     const [commit, setCommit] = useState("abcdef")
     const {user} = useAuthContext();
     const [message, setMessage] = useState(null)
+    const [gitUrl, setGitUrl] = useState('')
 
     const[error, setError] = useState(null);
     const[emptyFields, setEmptyFields] = useState([])
@@ -29,7 +30,7 @@ const RequestForm = () => {
             return
         }
 
-        const deployment = {service, environment, status, duration, commit, user: user?.name, message}
+        const deployment = {service, environment, status, duration, commit, user: user?.name, message, gitUrl}
 
         const response = await fetch(`http://localhost:${port}/deployments/`, {
             method:"POST",
@@ -62,7 +63,7 @@ const RequestForm = () => {
 
   return (
     <>
-        <form className="w-[95vw] h-107 bg-gray-800 rounded-xl py-9 px-8" onSubmit={ handleSubmit}>
+        <form className="w-full h-full bg-gray-800 rounded-xl py-9 px-8" onSubmit={ handleSubmit}>
             <label htmlFor="service" className="text-sm text-white mb-1">Deployment Name</label>
             <input 
                 id="service" 
@@ -88,7 +89,16 @@ const RequestForm = () => {
                 <option value="production">Production</option>
             </select>
             <div className="h-[1rem] mb-2"></div>
-
+            <label htmlFor="gitUrl" className="text-sm text-white mb-1">Git Repository URL</label>
+            <input 
+                id="gitUrl" 
+                type="url" 
+                placeholder="https://github.com/username/project" 
+                value={gitUrl || ""}
+                onChange={(e) => setGitUrl(e.target.value)} 
+                className="bg-gray-700 w-full h-10 rounded-md px-3 text-sm text-gray-100 mb-2 focus:outline-2 focus:outline-blue-400"
+            />
+            <div className="h-[1rem] mb-2"></div>
             <label htmlFor="message" className="text-sm text-white mb-1">Description</label>
             <textarea 
                 id="message" 
@@ -100,7 +110,7 @@ const RequestForm = () => {
             >
             </textarea>
             {error && <p className="text-red-400 text-sm ml-1">{error}</p>}
-            {emptyFields && <p className="text-red-400 text-sm ml-1">Here are the empty fields: {emptyFields}</p>}
+            {emptyFields.length>0 && <p className="text-red-400 text-sm ml-1">Here are the empty fields: {emptyFields}</p>}
             
             <div className="h-[1rem]"></div>
             <div className='flex justify-end w-full gap-3'>

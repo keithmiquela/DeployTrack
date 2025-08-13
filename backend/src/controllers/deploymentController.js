@@ -9,6 +9,14 @@ const getDeployments = async (req, res) => {
     res.status(200).json(deployments)
 }
 
+// get all user deployments
+const getUserDeployments = async(req, res) => {
+    const {user_id} = req.params
+    const deployments = await Deployment.find({user_id: user_id}).sort({createdAt: -1})
+
+    res.status(200).json(deployments)
+}
+
 
 // get a single deployment
 const getDeployment = async (req, res) => {
@@ -30,7 +38,7 @@ const getDeployment = async (req, res) => {
 // create
 
 const createDeployment = async (req, res) => {
-    const {service, environment, status, duration, commit, user, message} = req.body
+    const {service, environment, status, duration, commit, user, message, gitUrl} = req.body
 
     const user_id = req.user._id
 
@@ -56,6 +64,9 @@ const createDeployment = async (req, res) => {
     if(!message){
         emptyFields.push('message')
     }
+    if(!gitUrl){
+        emptyFields.push('gitUrl')
+    }
 
     if(emptyFields.length > 0){
         return res.status(400).json({error: "Please fil in all the fields", emptyFields})
@@ -63,7 +74,7 @@ const createDeployment = async (req, res) => {
 
     
     try {
-        const deployment = await Deployment.create({service, environment, status, duration, commit, user, message, user_id: req.user._id})
+        const deployment = await Deployment.create({service, environment, status, duration, commit, user, message, user_id: req.user._id, gitUrl})
         res.status(200).json(deployment)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -115,6 +126,7 @@ const updateDeployment = async (req, res) => {
 
 module.exports = {
     getDeployments, 
+    getUserDeployments,
     getDeployment,
     createDeployment,
     deleteDeployment,

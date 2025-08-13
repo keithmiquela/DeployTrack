@@ -2,7 +2,7 @@ import React from 'react'
 import Status from './Status'
 import { useNavigate } from 'react-router'
 import { useDeploymentsContext } from '../hooks/useDeploymentsContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 const DeploymentDetails = ({deployment}) => {
@@ -14,6 +14,8 @@ const DeploymentDetails = ({deployment}) => {
     const [error, setError] = useState(null)
 
     const {user} = useAuthContext();
+
+    const [message, setMessage] = useState(deployment.message)
 
     const handleDelete = async(e) => {
 
@@ -39,12 +41,26 @@ const DeploymentDetails = ({deployment}) => {
         }
     }
 
+    useEffect(()=>{
+        const truncateMessage = (str) => {
+
+            const maxLength = 15;
+            if (str.length > maxLength) {
+                return str.slice(0, maxLength - 3) + '...'; // Adjust for ellipsis
+            }
+            return str;
+        }
+
+
+        setMessage(truncateMessage(message))
+    })
+
   return (
     <tr className='bg-gray-800 h-15 border-t border-gray-700' key={deployment._id}>
         {/* Name */}
         <th className="text-left px-6 py-2 font-normal">
             <p className='text-sm text-white' >{deployment.service}</p>
-            <p className='text-xs text-gray-400'>{deployment.message}</p>
+            <p className='text-xs text-gray-400'>{message}</p>
         </th>
         {/* User */}
         <th className="text-left px-6 font-normal text-sm text-gray-300 min-w-55">

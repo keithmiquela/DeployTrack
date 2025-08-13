@@ -2,6 +2,7 @@ const express = require('express')
 const Deployment = require('../models/deploymentModel')
 const {
     getDeployments,
+    getUserDeployments,
     getDeployment,
     createDeployment,
     deleteDeployment,
@@ -15,6 +16,8 @@ const router = express.Router()
 router.use(requireAuth)
 
 router.get('/', getDeployments)
+
+router.get('/user/:user_id', getUserDeployments)
 
 router.get('/:id', getDeployment)
 

@@ -34,6 +34,10 @@ const deploymentSchema = new Schema({
     user_id: {
         type: String,
         required: true
+    },
+    gitUrl: {
+        type: String,
+        required: true
     }
 }, {timestamps: true})
 

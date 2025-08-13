@@ -34,9 +34,9 @@ const DeploymentTable = () => {
   }, [dispatch, user])
 
   return (
-    <div className='mx-7 my-5 rounded-lg border border-gray-700' >
+    <div className='mx-7 my-5 rounded-lg border border-gray-700 max-h-[75vh] overflow-y-auto' >
         <table className="w-full">
-          <thead className='bg-gray-900 text-gray-400 h-10'>
+          <thead className='bg-gray-900 text-gray-400 h-10 sticky top-0'>
             <tr>
               {columns.map((columnName) => (
                 <th className="text-left last:text-right px-6 font-normal text-sm pt-1" key={columnName._id}>{columnName.title}</th>
