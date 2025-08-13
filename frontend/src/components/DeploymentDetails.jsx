@@ -63,7 +63,7 @@ const DeploymentDetails = ({deployment}) => {
         </th>
         <th className="text-right px-6 font-normal text-sm text-white">
         <div className='flex gap-3'>
-            <button className='w-18 text-blue-400 font-semibold hover:text-blue-300 cursor-pointer' onClick={() => {navigate(`../deployment/${deployment._id}/logs`)}}>View Logs</button>
+            <button className='text-blue-400 font-semibold hover:text-blue-300 cursor-pointer' onClick={() => {navigate(`../deployment/${deployment._id}/logs`)}}>View Logs</button>
             {user._id==deployment.user_id && <button className='text-yellow-400 font-semibold hover:text-red-300 cursor-pointer' >Edit</button>}
             {user._id==deployment.user_id && <button className='text-red-400 font-semibold hover:text-red-300 cursor-pointer' onClick={handleDelete}>Delete</button>}
         </div>

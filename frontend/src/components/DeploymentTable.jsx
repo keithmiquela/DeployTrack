@@ -34,7 +34,7 @@ const DeploymentTable = () => {
   }, [dispatch, user])
 
   return (
-    <div className='mx-7 my-5 overflow-hidden rounded-lg border border-gray-700' >
+    <div className='mx-7 my-5 rounded-lg border border-gray-700' >
         <table className="w-full">
           <thead className='bg-gray-900 text-gray-400 h-10'>
             <tr>
