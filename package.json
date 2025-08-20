@@ -1,0 +1,34 @@
+{
+  "name": "deploytrack",
+  "version": "1.0.0",
+  "description": "A CI/CD-Powered Deployment Tracker",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon backend/src/app.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "cross-env NODE_ENV=production node backend/src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keithmiquela/DeployTrack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/keithmiquela/DeployTrack/issues"
+  },
+  "homepage": "https://github.com/keithmiquela/DeployTrack#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.2",
+    "validator": "^13.15.15"
+  },
+  "devDependencies": {
+    "cross-env": "^10.0.0"
+  }
+}
