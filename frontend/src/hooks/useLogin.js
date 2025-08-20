@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { apiCall } from "../config/api";
 
 export const useLogin = () => {
     const [error, setError] = useState(null)
@@ -11,7 +12,7 @@ export const useLogin = () => {
         setError(null)
         const port = import.meta.env.VITE_BACKEND_PORT
 
-        const response = await fetch(`http://localhost:${port}/user/login`, {
+        const response = await apiCall('/user/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({email, password})

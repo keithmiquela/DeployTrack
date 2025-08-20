@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import DeploymentDetails from './DeploymentDetails';
 import { useDeploymentsContext } from '../hooks/useDeploymentsContext';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { apiCall } from '../config/api';
 
 
 const DeploymentTable = ({isViewGlobal}) => {
@@ -17,13 +18,13 @@ const DeploymentTable = ({isViewGlobal}) => {
 
   useEffect (() => {
     const fetchDeployments = async() =>{
-      const response  = isViewGlobal ? await fetch(`http://localhost:${backendPort}/deployments/`, {
+      const response  = isViewGlobal ? await apiCall(`/deployments/`, {
         headers: {
           'Authorization': `Bearer ${user.token}`
         }
       })
       :
-      await fetch(`http://localhost:${backendPort}/deployments/user/${user._id}`, {
+      await apiCall(`/deployments/user/${user._id}`, {
         headers: {
           'Authorization': `Bearer ${user.token}`
         }

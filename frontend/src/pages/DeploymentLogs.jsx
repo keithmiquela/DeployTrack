@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Status from '../components/Status';
 import LogsTable from '../components/LogsTable';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { apiCall } from "../config/api";
 
 const DeploymentLogs = () => {
     const backendPort = import.meta.env.VITE_BACKEND_PORT;
@@ -18,7 +19,7 @@ const DeploymentLogs = () => {
 
     useEffect (() => {
         const fetchDeployment = async() =>{
-            const response  = await fetch(`http://localhost:${backendPort}/deployments/${id}`, {
+            const response  = await apiCall(`/deployments/${id}`, {
                 headers: {
                 'Authorization': `Bearer ${user.token}`
                 }

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router'
 import { useDeploymentsContext } from '../hooks/useDeploymentsContext'
 import { useState, useEffect } from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { apiCall } from '../config/api'
+
 
 const DeploymentDetails = ({deployment}) => {
 
@@ -24,7 +26,7 @@ const DeploymentDetails = ({deployment}) => {
         }
         const port = import.meta.env.VITE_BACKEND_PORT
 
-        const response = await fetch(`http://localhost:${port}/deployments/${deployment._id}`, {
+        const response = await apiCall(`/deployments/${deployment._id}`, {
             method:"DELETE",
             headers: {
                 'Authorization': `Bearer ${user.token}`

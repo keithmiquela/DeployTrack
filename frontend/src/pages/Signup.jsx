@@ -13,8 +13,6 @@ const Signup = () => {
           <h2 className="text-xl text-white mb-6">Learning DevOps Deployment Tracking</h2>
           <SignupForm />
           <p className="text-gray-400 text-sm mt-4">Already have an account? <button onClick={() => navigate("/user/login")} className="text-blue-400 hover:underline">Log in</button></p>
-          <div className="w-20 h-20 bg-white">
-          </div>
       </div>
     </>
   )

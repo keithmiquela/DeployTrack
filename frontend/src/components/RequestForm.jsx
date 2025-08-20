@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { apiCall } from '../config/api'
 
 const RequestForm = () => {
 
@@ -32,7 +33,7 @@ const RequestForm = () => {
 
         const deployment = {service, environment, status, duration, commit, user: user?.name, message, gitUrl}
 
-        const response = await fetch(`http://localhost:${port}/deployments/`, {
+        const response = await apiCall(`/deployments/`, {
             method:"POST",
             body: JSON.stringify(deployment),
             headers: {
